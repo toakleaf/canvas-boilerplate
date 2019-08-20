@@ -116,12 +116,12 @@ var mouse = {
 var colors = ['#2185C5', '#7ECEFD', '#FFF6E5', '#FF7F66'];
 
 // Event Listeners
-addEventListener('mousemove', function (event) {
+canvas.addEventListener('mousemove', function (event) {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
 });
 
-addEventListener('resize', function () {
+window.addEventListener('resize', function () {
     canvas.width = innerWidth;
     canvas.height = innerHeight;
 
