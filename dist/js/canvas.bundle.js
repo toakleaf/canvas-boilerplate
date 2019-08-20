@@ -96,21 +96,19 @@
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _utils = __webpack_require__(/*! ./utils */ "./src/js/utils.js");
 
 var _utils2 = _interopRequireDefault(_utils);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _objects = __webpack_require__(/*! ./objects */ "./src/js/objects.js");
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var canvas = document.querySelector('canvas');
 var c = canvas.getContext('2d');
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 var mouse = {
     x: innerWidth / 2,
@@ -132,12 +130,56 @@ window.addEventListener('resize', function () {
     init();
 });
 
-// Objects
+// Implementation
+var shapes = void 0;
+function init() {
+    shapes = [];
+
+    for (var i = 0; i < 400; i++) {
+        var radius = _utils2.default.randomIntFromRange(10, 50);
+        var x = _utils2.default.randomIntFromRange(0 + radius, canvas.width - radius);
+        var y = _utils2.default.randomIntFromRange(0 + radius, canvas.height - radius);
+        shapes.push(new _objects.Shape(c, x, y, radius, _utils2.default.randomColor(colors)));
+    }
+}
+
+// Animation Loop
+function animate() {
+    requestAnimationFrame(animate);
+    c.clearRect(0, 0, canvas.width, canvas.height);
+
+    shapes.forEach(function (shape) {
+        shape.update();
+    });
+
+    c.fillStyle = '#000';
+    c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y);
+}
+
+init();
+animate();
+
+/***/ }),
+
+/***/ "./src/js/objects.js":
+/*!***************************!*\
+  !*** ./src/js/objects.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Shape = function () {
-    function Shape(x, y, radius, color) {
+    function Shape(context, x, y, radius, color) {
         _classCallCheck(this, Shape);
 
+        this.c = context;
         this.x = x;
         this.y = y;
         this.radius = radius;
@@ -145,16 +187,16 @@ var Shape = function () {
     }
 
     _createClass(Shape, [{
-        key: 'draw',
+        key: "draw",
         value: function draw() {
-            c.beginPath();
-            c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-            c.fillStyle = this.color;
-            c.fill();
-            c.closePath();
+            this.c.beginPath();
+            this.c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+            this.c.fillStyle = this.color;
+            this.c.fill();
+            this.c.closePath();
         }
     }, {
-        key: 'update',
+        key: "update",
         value: function update() {
             this.draw();
         }
@@ -163,34 +205,7 @@ var Shape = function () {
     return Shape;
 }();
 
-// Implementation
-
-
-var shapes = void 0;
-function init() {
-    shapes = [];
-
-    // for (let i = 0; i < 400; i++) {
-    //     const radius = utils.randomIntFromRange(10, 50)
-    //     const x = utils.randomIntFromRange(0 + radius, canvas.width - radius)
-    //     const y = utils.randomIntFromRange(0 + radius, canvas.height - radius)
-    //     shapes.push(new Shape(x, y, radius, utils.randomColor(colors)))
-    // }
-}
-
-// Animation Loop
-function animate() {
-    requestAnimationFrame(animate);
-    c.clearRect(0, 0, canvas.width, canvas.height);
-
-    // shapes.forEach(shape => {
-    //     shape.update()
-    // })
-    c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y);
-}
-
-init();
-animate();
+module.exports = { Shape: Shape };
 
 /***/ }),
 
