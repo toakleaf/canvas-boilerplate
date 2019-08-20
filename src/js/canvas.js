@@ -2,7 +2,7 @@ import utils from './utils'
 import { Shape } from './objects'
 
 const canvas = document.querySelector('canvas')
-const c = canvas.getContext('2d')
+const ctx = canvas.getContext('2d')
 
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
@@ -36,7 +36,7 @@ function init() {
         const radius = utils.randomIntFromRange(10, 50)
         const x = utils.randomIntFromRange(0 + radius, canvas.width - radius)
         const y = utils.randomIntFromRange(0 + radius, canvas.height - radius)
-        shapes.push(new Shape(c, x, y, radius, utils.randomColor(colors)))
+        shapes.push(new Shape(ctx, x, y, radius, utils.randomColor(colors)))
     }
 }
 
@@ -46,14 +46,14 @@ function animate() {
     // requestAnimationFrame callback aims for a 60 FPS callback rate but doesn’t guarantee it, so manual track elapsed time
     requestAnimationFrame(animate)
     // let elapsedTime = Date.now() - renderTime
-    c.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     shapes.forEach(shape => {
         shape.update()
     })
 
-    c.fillStyle = '#000'
-    c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y)
+    ctx.fillStyle = '#000'
+    ctx.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y)
 }
 
 init()

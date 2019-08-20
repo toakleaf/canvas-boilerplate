@@ -1,6 +1,6 @@
 class Shape {
     constructor(context, x, y, radius, color) {
-        this.c = context
+        this.ctx = context
         this.x = x
         this.y = y
         this.radius = radius
@@ -8,11 +8,11 @@ class Shape {
     }
 
     draw() {
-        this.c.beginPath()
-        this.c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-        this.c.fillStyle = this.color
-        this.c.fill()
-        this.c.closePath()
+        this.ctx.beginPath()
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+        this.ctx.fillStyle = this.color
+        this.ctx.fill()
+        this.ctx.closePath()
     }
 
     update() {

@@ -105,7 +105,7 @@ var _objects = __webpack_require__(/*! ./objects */ "./src/js/objects.js");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var canvas = document.querySelector('canvas');
-var c = canvas.getContext('2d');
+var ctx = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -139,7 +139,7 @@ function init() {
         var radius = _utils2.default.randomIntFromRange(10, 50);
         var x = _utils2.default.randomIntFromRange(0 + radius, canvas.width - radius);
         var y = _utils2.default.randomIntFromRange(0 + radius, canvas.height - radius);
-        shapes.push(new _objects.Shape(c, x, y, radius, _utils2.default.randomColor(colors)));
+        shapes.push(new _objects.Shape(ctx, x, y, radius, _utils2.default.randomColor(colors)));
     }
 }
 
@@ -149,14 +149,14 @@ function animate() {
     // requestAnimationFrame callback aims for a 60 FPS callback rate but doesn’t guarantee it, so manual track elapsed time
     requestAnimationFrame(animate);
     // let elapsedTime = Date.now() - renderTime
-    c.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     shapes.forEach(function (shape) {
         shape.update();
     });
 
-    c.fillStyle = '#000';
-    c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y);
+    ctx.fillStyle = '#000';
+    ctx.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y);
 }
 
 init();
@@ -182,7 +182,7 @@ var Shape = function () {
     function Shape(context, x, y, radius, color) {
         _classCallCheck(this, Shape);
 
-        this.c = context;
+        this.ctx = context;
         this.x = x;
         this.y = y;
         this.radius = radius;
@@ -192,11 +192,11 @@ var Shape = function () {
     _createClass(Shape, [{
         key: "draw",
         value: function draw() {
-            this.c.beginPath();
-            this.c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-            this.c.fillStyle = this.color;
-            this.c.fill();
-            this.c.closePath();
+            this.ctx.beginPath();
+            this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+            this.ctx.fillStyle = this.color;
+            this.ctx.fill();
+            this.ctx.closePath();
         }
     }, {
         key: "update",
