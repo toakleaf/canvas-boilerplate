@@ -27,33 +27,38 @@ window.addEventListener('resize', () => {
 })
 
 // Objects
-function Object(x, y, radius, color) {
-    this.x = x
-    this.y = y
-    this.radius = radius
-    this.color = color
-}
+class Shape {
+    constructor(x, y, radius, color) {
+        this.x = x
+        this.y = y
+        this.radius = radius
+        this.color = color
+    }
 
-Object.prototype.draw = function() {
-    c.beginPath()
-    c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-    c.fillStyle = this.color
-    c.fill()
-    c.closePath()
-}
+    draw() {
+        c.beginPath()
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+        c.fillStyle = this.color
+        c.fill()
+        c.closePath()
+    }
 
-Object.prototype.update = function() {
-    this.draw()
+    update() {
+        this.draw()
+    }
 }
 
 // Implementation
-let objects
+let shapes
 function init() {
-    objects = []
+    shapes = []
 
-    for (let i = 0; i < 400; i++) {
-        // objects.push()
-    }
+    // for (let i = 0; i < 400; i++) {
+    //     const radius = utils.randomIntFromRange(10, 50)
+    //     const x = utils.randomIntFromRange(0 + radius, canvas.width - radius)
+    //     const y = utils.randomIntFromRange(0 + radius, canvas.height - radius)
+    //     shapes.push(new Shape(x, y, radius, utils.randomColor(colors)))
+    // }
 }
 
 // Animation Loop
@@ -62,8 +67,8 @@ function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height)
 
     c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y)
-    // objects.forEach(object => {
-    //  object.update()
+    // shapes.forEach(shape => {
+    //     shape.update()
     // })
 }
 
