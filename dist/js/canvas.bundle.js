@@ -144,8 +144,11 @@ function init() {
 }
 
 // Animation Loop
+// let renderTime = Date.now()
 function animate() {
+    // requestAnimationFrame callback aims for a 60 FPS callback rate but doesn’t guarantee it, so manual track elapsed time
     requestAnimationFrame(animate);
+    // let elapsedTime = Date.now() - renderTime
     c.clearRect(0, 0, canvas.width, canvas.height);
 
     shapes.forEach(function (shape) {
